@@ -23,6 +23,9 @@ const NavBar = () => {
          <li>
             <Link to="/signup">SIGN UP</Link>
          </li>
+         <li>
+            <Link to="/login">SIGN IN</Link>
+         </li>
       </>
    )
    return (
