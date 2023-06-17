@@ -8,7 +8,7 @@ const useClass = (id) => {
     // use axios secure with react query
     const {data: check,refetch:refresh} = useQuery({
         queryKey: ['isSelected', user?.email,id],
-        enabled: user !== null,
+        enabled: !loading && !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/class_is_selected_or_enrolled/${user?.email}/${id}`);
             return res.data;
