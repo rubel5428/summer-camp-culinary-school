@@ -1,14 +1,44 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 const SociaLogin = () => {
     const {signInWithGoogle} = useContext(AuthContext)
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+
     const handleGoogleLogin = () =>{
             signInWithGoogle()
-            .then(()=>{})
+            .then((result)=>{
+                const logUser = result.user;
+                const saveuser = {
+                    name: logUser.displayName,
+                    email: logUser.email,
+                    photoURL: logUser?.photoURL,
+                    role:'student'
+                }
+                fetch('https://master-coocking-assignment-server.vercel.app/users', {
+                    method: 'POST',
+                    headers: {
+                       'content-type': 'application/json',
+                    },
+                    body: JSON.stringify(saveuser),
+                 })
+                 .then((res) => navigate(from, { replace: true }))
+
+            })
             .catch(error=>{
-                console.log(error)
+               Swal.fire({
+                  position: 'center',
+                  icon: 'error',
+                  title: `There Was an error!.${error?.message}`,
+                  showConfirmButton: false,
+                  timer: 3000
+                })
             })
     }
     return (
@@ -35,19 +65,9 @@ const SociaLogin = () => {
                                  />
                               </svg>
                            </div>
-                           <span className="ml-4">Sign Up with Google</span>
+                           <span className="ml-4">Sign In with Google</span>
                         </button>
-                        <button className="flex items-center justify-center w-full py-2 mt-5 font-bold text-gray-800 transition-all duration-300 ease-in-out bg-indigo-100 rounded-lg shadow-sm focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
-                           <div className="p-1 bg-white rounded-full">
-                              <svg className="w-6" viewBox="0 0 32 32">
-                                 <path
-                                    fillRule="evenodd"
-                                    d="M16 4C9.371 4 4 9.371 4 16c0 5.3 3.438 9.8 8.207 11.387.602.11.82-.258.82-.578 0-.286-.011-1.04-.015-2.04-3.34.723-4.043-1.609-4.043-1.609-.547-1.387-1.332-1.758-1.332-1.758-1.09-.742.082-.726.082-.726 1.203.086 1.836 1.234 1.836 1.234 1.07 1.836 2.808 1.305 3.492 1 .11-.777.422-1.305.762-1.605-2.664-.301-5.465-1.332-5.465-5.93 0-1.313.469-2.383 1.234-3.223-.121-.3-.535-1.523.117-3.175 0 0 1.008-.32 3.301 1.23A11.487 11.487 0 0116 9.805c1.02.004 2.047.136 3.004.402 2.293-1.55 3.297-1.23 3.297-1.23.656 1.652.246 2.875.12 3.175.77.84 1.231 1.91 1.231 3.223 0 4.61-2.804 5.621-5.476 5.922.43.367.812 1.101.812 2.219 0 1.605-.011 2.898-.011 3.293 0 .32.214.695.824.578C24.566 25.797 28 21.3 28 16c0-6.629-5.371-12-12-12z"
-                                 />
-                              </svg>
-                           </div>
-                           <span className="ml-4">Sign Up with GitHub</span>
-                        </button>
+                      
                      </div>
                      <div className="my-4 text-center border-b">
                         <div className="inline-block px-2 text-sm font-medium leading-none tracking-wide text-gray-600 transform translate-y-1/2 bg-white">

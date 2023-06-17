@@ -2,8 +2,10 @@
 import { Link } from 'react-router-dom'
 import logo from '../../../assets/logo.png'
 import profilePhoto from '../../../assets/user.jpeg'
+import useAuth from '../../../hooks/useAuth'
 
 const NavBar = () => {
+   const {user,logOut} = useAuth();
    const navOption = (
       <>
          <li>
@@ -11,21 +13,22 @@ const NavBar = () => {
          </li>
 
          <li>
-            <Link>Instructors</Link>
+            <Link to='all_instructor'>Instructors</Link>
          </li>
          <li>
-         <Link>Classes</Link>
+         <Link to='/all_class'>Classes</Link>
          </li>
-         <li>
-         <Link>Dashboard </Link>
-         </li>
-
-         <li>
+          {user && <li>
+         <Link to='/dashboard'>Dashboard </Link>
+         </li>}
+         {!user &&   <><li>
             <Link to="/signup">SIGN UP</Link>
          </li>
-         <li>
-            <Link to="/login">SIGN IN</Link>
-         </li>
+          <li>
+          <Link to="/login">SIGN IN</Link>
+       </li></>
+         }
+        
       </>
    )
    return (
@@ -63,11 +66,12 @@ const NavBar = () => {
          <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1 uppercase">{navOption}</ul>
          </div>
-         <div className="navbar-end">
+       {user &&   <div className="navbar-end">
          
-          <img className="w-10 rounded-full" src={profilePhoto}/>
+         <img className="w-10 rounded-full" src={user?.photoURL ? user?.photoURL : profilePhoto}/>
+         <button onClick={logOut} className='text-white btn btn-sm bg-red-500 py-2 px-4 rounded ml-3'>Logout</button>
 
-         </div>
+        </div>}
       </div>
    )
 }

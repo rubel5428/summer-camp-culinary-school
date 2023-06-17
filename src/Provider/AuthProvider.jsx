@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { app } from "../firebase/firebase.config";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile  } from "firebase/auth";
+import axios from "axios";
 
 
 export const AuthContext = createContext(null)
@@ -31,20 +32,28 @@ const AuthProvider = ({children}) => {
      const updateUserProfile = (name, photo) => {
         return updateProfile(auth.currentUser, {
            displayName: name,
-           photoURL: photo
+           photoURL: photo,
+
         })
            
      }
 
     useEffect(() => {
-        const unSubscrib = onAuthStateChanged (auth, (currentUser) => {
+        const unSubscribe = onAuthStateChanged (auth, (currentUser) => {
            setUser(currentUser)
-          
-        
-           setLoading(false)
+           if(currentUser){
+            axios.post('https://master-coocking-assignment-server.vercel.app/jwt_token', {email: currentUser.email})
+            .then(data =>{
+                localStorage.setItem('mc-school-access-token', data.data.token)
+                setLoading(false);
+            })
+        }
+        else{
+           localStorage.removeItem('mc-school-access-token')
+        }
         })
         return () => {
-           return unSubscrib
+           return unSubscribe()
         }
      }, [])
 
