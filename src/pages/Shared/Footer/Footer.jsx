@@ -7,8 +7,9 @@ import logo from '../../../assets/logo.png'
 const Footer = () => {
    const newYear = new Date().getFullYear()
    return (
-      <footer>
-         <div className="grid md:grid-cols-3 lg:w-[1280px] mx-auto text-neutral-content">
+      <footer className='bg-black opacity-70 flex items-center pt-16 px-8'>
+        <div>
+        <div className="grid md:grid-cols-3 gap-5 lg:w-[1280px] mx-auto text-neutral-content">
             <div className="md:h-96">
                <h3 className="text-4xl mb-6">Location</h3>
                <div className="space-y-4">
@@ -39,7 +40,7 @@ const Footer = () => {
                </div>
             </div>
             <div className=" ">
-               <img className="bg-white w-56 h-28" src={logo} alt="" />
+               <img className="bg-white w-28 h-16" src={logo} alt="" />
                <p>
                   Our Cooking School features a long and proud history of more
                   than 100 years. Founded at the end of the XIXth century.
@@ -94,6 +95,7 @@ const Footer = () => {
                </p>
             </div>
          </div>
+        </div>
       </footer>
    )
 }
