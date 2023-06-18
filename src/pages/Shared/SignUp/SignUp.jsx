@@ -28,7 +28,7 @@ const SignUp = () => {
                photoURL: data?.photoURL,
                role:'student'
          }
-         fetch('https://master-coocking-assignment-server.vercel.app/users', {
+         fetch('https://master-coocking-assignment-server-rubel5428.vercel.app/users', {
                method: 'POST',
                headers: {
                   'content-type': 'application/json',

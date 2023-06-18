@@ -7,7 +7,7 @@ export default function Instructor() {
   const { data: instructors = [] } = useQuery({
     queryKey: ['instructors'],
     queryFn: async () => {
-        const res = await axios.get(`https://master-coocking-assignment-server.vercel.app/get_six_instructor`)
+        const res = await axios.get(`https://master-coocking-assignment-server-rubel5428.vercel.app/get_six_instructor`)
         return res.data;
     },
 })

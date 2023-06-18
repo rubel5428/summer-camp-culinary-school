@@ -7,7 +7,7 @@ const Course = () => {
     const {refetch, data: courses = [] } = useQuery({
         queryKey: ['popular_class'],
         queryFn: async () => {
-            const res = await axios.get(`https://master-coocking-assignment-server.vercel.app/lts_six_class`)
+            const res = await axios.get(`https://master-coocking-assignment-server-rubel5428.vercel.app/lts_six_class`)
             return res.data;
         },
     })

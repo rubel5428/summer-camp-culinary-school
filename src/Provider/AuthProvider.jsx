@@ -42,7 +42,7 @@ const AuthProvider = ({children}) => {
         const unSubscribe = onAuthStateChanged (auth, (currentUser) => {
            setUser(currentUser)
            if(currentUser){
-            axios.post('https://master-coocking-assignment-server.vercel.app/jwt_token', {email: currentUser.email})
+            axios.post('https://master-coocking-assignment-server-rubel5428.vercel.app/jwt_token', {email: currentUser.email})
             .then(data =>{
                 localStorage.setItem('mc-school-access-token', data.data.token)
                 setLoading(false);

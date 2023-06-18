@@ -6,7 +6,7 @@ const AllInstructor = () => {
     const { data: instructors = [] } = useQuery({
         queryKey: ['all_instructor'],
         queryFn: async () => {
-            const res = await axios.get(`https://master-coocking-assignment-server.vercel.app/get_all_instructors`)
+            const res = await axios.get(`https://master-coocking-assignment-server-rubel5428.vercel.app/get_all_instructors`)
             return res.data;
         },
     })
